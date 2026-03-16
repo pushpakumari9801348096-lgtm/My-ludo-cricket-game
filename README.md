@@ -1,107 +1,113 @@
-function playSound(id) {
-    let sound = document.getElementById(id);
-    sound.currentTime = 0; // Sound ko restart karne ke liye
-    sound.play();
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Ludo Cricket Game</title>
+    <style>
+        /* Yahan wahi CSS design jo maine pehle diya tha */
+        body { font-family: Arial; text-align: center; background: #f0f4f8; }
+        .game-box { border: 5px solid #333; padding: 20px; width: 300px; margin: 20px auto; background: white; border-radius: 15px; }
+        .active { background: #d1ffd1; border: 2px solid green; }
+        button { padding: 10px 20px; font-size: 18px; cursor: pointer; }
+    </style>
+</head>
+<body>
 
-function playTurn() {
-    if (wickets[0] >= maxWickets && wickets[1] >= maxWickets) {
-        checkWinner();
-        return;
-    }
+<div class="game-box">
+    <h2>Ludo-Cricket 🏏</h2>
+    <div id="status-msg">Game Shuru Karo!</div>
+    <div id="p1-card" class="player-card active">P1 Runs: <span id="p1-runs">0</span> | W: <span id="p1-wickets">0</span></div>
+    <div id="p2-card" class="player-card">P2 Runs: <span id="p2-runs">0</span> | W: <span id="p2-wickets">0</span></div>
+    <div id="dice-display" style="font-size: 50px; margin: 10px;">🎲</div>
+    <button onclick="playTurn()">Roll Dice</button>
+</div>
 
-    // Dice roll sound
-    playSound("sound-dice");
+<script>
+    let scores = [0, 0]; 
+    let wickets = [0, 0];
+    let currentPlayer = 0;
+    const maxWickets = 3;
+    let isFreeHit = [false, false];
 
-    let dice = Math.floor(Math.random() * 6) + 1;
-    let diceIcon = ["", "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
-    document.getElementById("dice-display").innerHTML = diceIcon[dice];
-
-    let status = document.getElementById("status-msg");
-
-    if (dice === 5) {
-        if (isFreeHit[currentPlayer]) {
-            status.innerHTML = `🛡️ SAFE! Free Hit bach gaya!`;
-            isFreeHit[currentPlayer] = false;
-        } else {
-            wickets[currentPlayer]++;
-            status.innerHTML = `☝️ OUT! Player ${currentPlayer + 1} gaya!`;
-            playSound("sound-out"); // Out sound
-            changeTurn();
+    function playTurn() {
+        if (wickets[0] >= maxWickets && wickets[1] >= maxWickets) {
+            alert("Game Over!");
+            return;
         }
-    } 
-    else if (dice === 6) {
-        scores[currentPlayer] += 6;
-        status.innerHTML = `🚀 SIXER!!! Extra Turn!`;
-        playSound("sound-hit"); // Hit sound
-    }
-    else if (dice === 4) {
-        scores[currentPlayer] += 4;
-        isFreeHit[currentPlayer] = true;
-        status.innerHTML = `🏏 CHAUUKA! Free Hit mila!`;
-        playSound("sound-hit"); // Hit sound
-        changeTurn();
-    }
-    else {
-        scores[currentPlayer] += dice;
-        status.innerHTML = `Player ${currentPlayer + 1}: ${dice} runs`;
-        isFreeHit[currentPlayer] = false;
-        changeTurn();
+        let dice = Math.floor(Math.random() * 6) + 1;
+        document.getElementById("dice-display").innerHTML = ["","⚀","⚁","⚂","⚃","⚄","⚅"][dice];
+        
+        // Baki ka pura logic yahan paste karein...
+        if(dice === 5) { wickets[currentPlayer]++; }
+        else { scores[currentPlayer] += dice; }
+        
+        updateUI();
+        currentPlayer = (currentPlayer === 0) ? 1 : 0;
     }
 
-    updateUI();
-}
-function playSound(id) {
-    let sound = document.getElementById(id);
-    sound.currentTime = 0; // Sound ko restart karne ke liye
-    sound.play();
-}
-
-function playTurn() {
-    if (wickets[0] >= maxWickets && wickets[1] >= maxWickets) {
-        checkWinner();
-        return;
+    function updateUI() {
+        document.getElementById("p1-runs").innerText = scores[0];
+        document.getElementById("p1-wickets").innerText = wickets[0];
+        document.getElementById("p2-runs").innerText = scores[1];
+        document.getElementById("p2-wickets").innerText = wickets[1];
     }
+</script>
 
-    // Dice roll sound
-    playSound("sound-dice");
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Ludo Cricket Game</title>
+    <style>
+        /* Yahan wahi CSS design jo maine pehle diya tha */
+        body { font-family: Arial; text-align: center; background: #f0f4f8; }
+        .game-box { border: 5px solid #333; padding: 20px; width: 300px; margin: 20px auto; background: white; border-radius: 15px; }
+        .active { background: #d1ffd1; border: 2px solid green; }
+        button { padding: 10px 20px; font-size: 18px; cursor: pointer; }
+    </style>
+</head>
+<body>
 
-    let dice = Math.floor(Math.random() * 6) + 1;
-    let diceIcon = ["", "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
-    document.getElementById("dice-display").innerHTML = diceIcon[dice];
+<div class="game-box">
+    <h2>Ludo-Cricket 🏏</h2>
+    <div id="status-msg">Game Shuru Karo!</div>
+    <div id="p1-card" class="player-card active">P1 Runs: <span id="p1-runs">0</span> | W: <span id="p1-wickets">0</span></div>
+    <div id="p2-card" class="player-card">P2 Runs: <span id="p2-runs">0</span> | W: <span id="p2-wickets">0</span></div>
+    <div id="dice-display" style="font-size: 50px; margin: 10px;">🎲</div>
+    <button onclick="playTurn()">Roll Dice</button>
+</div>
 
-    let status = document.getElementById("status-msg");
+<script>
+    let scores = [0, 0]; 
+    let wickets = [0, 0];
+    let currentPlayer = 0;
+    const maxWickets = 3;
+    let isFreeHit = [false, false];
 
-    if (dice === 5) {
-        if (isFreeHit[currentPlayer]) {
-            status.innerHTML = `🛡️ SAFE! Free Hit bach gaya!`;
-            isFreeHit[currentPlayer] = false;
-        } else {
-            wickets[currentPlayer]++;
-            status.innerHTML = `☝️ OUT! Player ${currentPlayer + 1} gaya!`;
-            playSound("sound-out"); // Out sound
-            changeTurn();
+    function playTurn() {
+        if (wickets[0] >= maxWickets && wickets[1] >= maxWickets) {
+            alert("Game Over!");
+            return;
         }
-    } 
-    else if (dice === 6) {
-        scores[currentPlayer] += 6;
-        status.innerHTML = `🚀 SIXER!!! Extra Turn!`;
-        playSound("sound-hit"); // Hit sound
-    }
-    else if (dice === 4) {
-        scores[currentPlayer] += 4;
-        isFreeHit[currentPlayer] = true;
-        status.innerHTML = `🏏 CHAUUKA! Free Hit mila!`;
-        playSound("sound-hit"); // Hit sound
-        changeTurn();
-    }
-    else {
-        scores[currentPlayer] += dice;
-        status.innerHTML = `Player ${currentPlayer + 1}: ${dice} runs`;
-        isFreeHit[currentPlayer] = false;
-        changeTurn();
+        let dice = Math.floor(Math.random() * 6) + 1;
+        document.getElementById("dice-display").innerHTML = ["","⚀","⚁","⚂","⚃","⚄","⚅"][dice];
+        
+        // Baki ka pura logic yahan paste karein...
+        if(dice === 5) { wickets[currentPlayer]++; }
+        else { scores[currentPlayer] += dice; }
+        
+        updateUI();
+        currentPlayer = (currentPlayer === 0) ? 1 : 0;
     }
 
-    updateUI();
-}
-# My-ludo-cricket-game
+    function updateUI() {
+        document.getElementById("p1-runs").innerText = scores[0];
+        document.getElementById("p1-wickets").innerText = wickets[0];
+        document.getElementById("p2-runs").innerText = scores[1];
+        document.getElementById("p2-wickets").innerText = wickets[1];
+    }
+</script>
+
+</body>
+</html>
+
